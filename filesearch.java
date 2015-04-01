@@ -9,56 +9,21 @@ public class filesearch {
 	private String filename;
 	private List<String> result = new ArrayList<String>();
 
-	public String getFileName() {
-		return filename;
-	}
 
 	public void setFileName(String fileNameToSearch) {
 		this.filename = fileNameToSearch;
+	}
+
+	public String getFileName() {
+		return filename;
 	}
 
 	public List<String> getResult() {
 		return result;
 	}
 
-	public static void main(String[] args) {
-
-		filesearch fileSearch = new filesearch();
-		File nameOfFile;
-		File directory = new File("E:/workspace");
-		File[] files = directory.listFiles();
-
-		FileFilter fileFilter = new FileFilter() {
-			public boolean accept(File file) {
-				return file.isDirectory();
-			}
-		};
-		files = directory.listFiles(fileFilter);
-		// System.out.println(files.length);
-		if (files.length == 0) {
-			System.out.println("Either directory does not exist or is not a directory");
-		} 
-		else {
-			for (int i = 0; i < files.length; i++) {
-				nameOfFile = files[i];
-				System.out.println(nameOfFile.toString());
-			
-				fileSearch.searchDirectory(new File(nameOfFile.toString()),"sample.txt");
-
-				int numOfFile = fileSearch.getResult().size();
-				if (numOfFile == 0) {
-					System.out.println("\nNo result found!");
-				} 
-				else {
-					System.out.println("\nFound " + numOfFile + " result!\n");
-					for (String matched : fileSearch.getResult()) {
-						System.out.println("Found : " + matched);
-					}
-				}
-			}
-		}
-	}
-
+	
+	
 	public void searchDirectory(File directory, String fileNameToSearch) {
 		setFileName(fileNameToSearch);
 		if (directory.isDirectory()) {
@@ -69,7 +34,8 @@ public class filesearch {
 		}
 
 	}
-
+	
+	
 	private void search(File file) {
 		if (file.isDirectory()) {
 			System.out.println("Searching directory:    "+ file.getAbsoluteFile());
@@ -95,4 +61,44 @@ public class filesearch {
 
 	}
 
+	public static void main(String[] args) {
+
+		filesearch fileSearch = new filesearch();
+		File nameOfFile;
+		File directory = new File("E:/workspace");
+		File[] files = directory.listFiles();
+
+		FileFilter fileFilter = new FileFilter() {
+		
+			public boolean accept(File file) {
+				return file.isDirectory();
+			}
+		};
+		files = directory.listFiles(fileFilter);
+	
+		if (files.length == 0) {
+			System.out.println("Either directory does not exist or is not a directory");
+		} 
+		else {
+			for (int i = 0; i < files.length; i++) {
+				nameOfFile = files[i];
+				
+				System.out.println(nameOfFile.toString());
+			
+				fileSearch.searchDirectory(new File(nameOfFile.toString()),"sample.txt");
+
+				int numOfFile = fileSearch.getResult().size();
+				
+				if (numOfFile == 0) {
+					System.out.println("\nNo result found!");
+				} 
+				else {
+					System.out.println("\nFound " + numOfFile + " result!\n");
+					for (String matched : fileSearch.getResult()) {
+						System.out.println("Found : " + matched);
+					}
+				}
+			}
+		}
+	}	
 }
